@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  orderapi
+
+  Sample SAM Template for orderapi
+
+
+
+Resources:
+  CreateOrderFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: orderapi
+      Handler: com.aws.lamdba.apis.CreateOrderLambda::createOrder
+      Runtime: java11
+      Architectures:
+      - x86_64
+      MemorySize: 512
+      Timeout: 30
+      Events:
+        OrderEvents:
+          Type: Api
+          Properties:
+            Path: /orders
+            Method: POST
+  
+  ReadOrderFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: orderapi
+      Handler: com.aws.lamdba.apis.ReadOrdersLambda::getOrders
+      Runtime: java11
+      Architectures:
+      - x86_64
+      MemorySize: 512
+      Timeout: 30
+      Events:
+        OrderEvents:
+          Type: Api
+          Properties:
+            Path: /orders
+            Method: GET
